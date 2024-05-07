@@ -14,6 +14,14 @@ Route::get('/test', function(){
     ];
 });
 
+Route::middleware('auth:sanctum')->post('orders', function() {
+    abort_unless(Auth::user()->tokenCan('orders:create'), 403, "You don't have permissions to perform this action");
+
+    return [
+        'message' => 'Order created',
+    ];
+});
+
 //Route::post('/login', [App\Http\Controllers\Api\AuthController::class, 'login']);
 Route::post('login', [LoginController::class, 'login']);
 
